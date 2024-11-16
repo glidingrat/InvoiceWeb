@@ -4,16 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>InvoiceNow - Přihlášení</title>
-    <link rel="stylesheet" href="css/styles.css"> <!-- Odkaz na CSS soubor -->
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/response.css"> 
+    <script src="js/login.js" defer></script>
 
-    
+
 </head>
-<body>
+<body id="login">
     <header>
         <a href="index.html" class="logo">InvoiceNow</a>
     </header>
     
-    <div class="container">
+    <main id="login">
         <div class="form-box">
             <h1>Přihlášení</h1>
             <form action="php/login.php" method="post">
@@ -27,8 +29,8 @@
                 </div>
                 <button type="submit" class="btn">Přihlásit se</button>
             </form>
-            <p>Nemáte účet? <a href="register.html">Zaregistrujte se</a></p>
+            <p>Nemáte účet? <a href="register.html" class="register">Zaregistrujte se</a></p>
         </div>
-    </div>
+    </main>
 </body>
 </html>

@@ -91,6 +91,14 @@ p {
     color: #777;
 }
 
+ul{
+    margin: 0 0 20px 20px; 
+    padding: 0; 
+    list-style-type: disc;
+    text-align: left;
+    color: #777;
+}
+
 p a {
     color: #4a90e2;
     text-decoration: none;

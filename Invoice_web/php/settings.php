@@ -21,14 +21,21 @@ $company = $company_stmt->fetch();
 
 // Process form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // User information
-    $first_name = $_POST['first_name'];
-    $last_name = $_POST['last_name'];
-    $email = $_POST['email'];
-    $new_username = $_POST['username']; // New username
-    $current_password = $_POST['current_password']; // Current password
-    $new_password = $_POST['new_password']; // New password
-    $company_update_password = $_POST['company_update_password']; // Password for company info update
+    $first_name = $_POST['first_name'] ?? '';
+    $last_name = $_POST['last_name'] ?? '';
+    $email = $_POST['email'] ?? '';
+    $new_username = $_POST['username'] ?? '';
+    $current_password = $_POST['current_password'] ?? '';
+    $new_password = $_POST['new_password'] ?? '';
+    $company_update_password = $_POST['company_update_password'] ?? '';
+
+    if ($_POST['form_type'] === 'user_info') {
+        // Zpracování informací o uživateli
+        if (password_verify($current_password, $user['password'])) {
+            // Pokračujte aktualizací
+        }
+    }
+
 
     // User info update
     if ($_POST['form_type'] === 'user_info') {
@@ -40,13 +47,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // If new password is provided, hash it and include it in the update
             if (!empty($new_password)) {
                 $hashed_new_password = password_hash($new_password, PASSWORD_DEFAULT);
-                $update_data[3] = $hashed_new_password; // Update the password in the array
+                // Vytvoříme nové pole s odpovídajícím počtem parametrů
+                $update_data = [$first_name, $last_name, $email, $new_username, $hashed_new_password, $username];
                 $updateStmt = $pdo->prepare("UPDATE users SET first_name = ?, last_name = ?, email = ?, username = ?, password = ? WHERE username = ?");
                 $updateStmt->execute($update_data);
             } else {
+                // Pokud není nové heslo zadáno
+                $update_data = [$first_name, $last_name, $email, $new_username, $username];
                 $updateStmt = $pdo->prepare("UPDATE users SET first_name = ?, last_name = ?, email = ?, username = ? WHERE username = ?");
-                $updateStmt->execute([$first_name, $last_name, $email, $new_username, $username]);
+                $updateStmt->execute($update_data);
             }
+            
 
             // Update session
             $_SESSION['username'] = $new_username; // Save new username in session
@@ -92,6 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nastavení uživatelského účtu</title>
     <link rel="stylesheet" href="../css/styles.css">
+    <link rel="icon" href="data:,">
 </head>
 <body>
     <header>
@@ -147,6 +159,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <label for="new_password">Nové heslo</label>
                     <input type="password" id="new_password" name="new_password">
                 </div>
+                <small>
+                        <ul>
+                            <li>Jedno velké písmeno</li>
+                            <li>Jedno malé písmeno</li>
+                            <li>Jednu číslici</li>
+                            <li>Minimální délku 8 znaků</li>
+                        </ul>
+                    </small>
                 <button type="submit" class="btn">Uložit změny</button>
             </form>
         </div>

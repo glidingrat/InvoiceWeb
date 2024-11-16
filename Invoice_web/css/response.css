@@ -1,18 +1,48 @@
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 920px) {
    
  .flex-container{
     flex-direction: row;
 }
 
+main#index{
+    margin-left: 25%;
+    margin-right: 25%;
+}
+
 
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 920px) {
 body#About {
  text-align: center;
  margin: 0;
 
-}.office{
+ 
+}
+
+main#index{
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+h1 {
+    font-size: 3em;
+}
+
+h2 {
+    font-size: 2em;
+}
+
+p {
+    margin: 25px 10%;
+}
+
+.answers-button {
+    padding: 12px 24px;
+    font-size: 1em;
+}
+
+.office{
     width: 80%;
     height: auto;
    

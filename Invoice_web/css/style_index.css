@@ -16,8 +16,31 @@
 
 /* INDEX PAGE */
 
+.fade-out {
+    animation: fadeOut 0.1s forwards;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.1s forwards;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+
 .logo{
-    font-size: 24px;
+    font-size: 30px;
     font-weight: 700;
 }
 
@@ -56,8 +79,14 @@ body#index {
 }
 
 main#index{
-    margin-top: 15%;
+    margin-top: 11%;
     text-align: center;
+
+    background-color: rgba(104, 104, 104, 0.4); /* Šedé pozadí s průhledností */
+    border-radius: 25px; /* Zaoblené rohy */
+    padding: 10px 20px; /* Vnitřní odsazení */
+    margin-bottom: 15px; /* Mezera mezi prvky */
+    text-shadow: none; /* Zruší stíny na textu */
 }
 
 h1 {
@@ -70,8 +99,12 @@ h2 {
 
 p{
     font-size: 1.2em;
-    margin: 25px 30% 25px 30%;
+    margin: 25px 20% 25px 20%;
+    font-weight: bold;
 }
+
+
+
 
 .answers-button {
     background-color: #F5F5DC; 
@@ -89,3 +122,21 @@ p{
     border-radius: 25px;
     opacity: 0.7;
 }
+
+.answers-button:hover {
+    opacity: 1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
