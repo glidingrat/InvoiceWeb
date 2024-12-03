@@ -63,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['username'] = $new_username; // Save new username in session
 
             // Redirect back to settings page with success message
-            header("Location: settings.php?success_user=Údaje o uživateli byly úspěšně aktualizovány.");
+            header("Location: settings.php?success_user=Aktualizováno!");
             exit();
         } else {
             $error_message = "Aktuální heslo je nesprávné.";
@@ -87,12 +87,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $insertCompanyStmt->execute([$username, $company_name, $street_address, $postal_city, $phone]);
             }
 
-            header("Location: settings.php?success_company=Údaje o společnosti byly úspěšně aktualizovány.");
+            header("Location: settings.php?success_company=Aktualizováno!");
             exit();
         } else {
             $company_error_message = "Aktuální heslo je nesprávné pro změnu údajů o společnosti.";
         }
     }
+
+// Password change
+if ($_POST['form_type'] === 'change_password') {
+    $current_password = $_POST['current_password'];
+    $new_password = $_POST['new_password'];
+
+    if (password_verify($current_password, $user['password'])) {
+        // Check password complexity
+        if (strlen($new_password) >= 8 &&
+            preg_match('/[A-Z]/', $new_password) &&
+            preg_match('/[a-z]/', $new_password) &&
+            preg_match('/\d/', $new_password)) {
+
+            // Hash the new password
+            $new_password_hash = password_hash($new_password, PASSWORD_DEFAULT);
+
+            // Update the password in the database
+            $updatePasswordStmt = $pdo->prepare("UPDATE users SET password = ? WHERE username = ?");
+            $updatePasswordStmt->execute([$new_password_hash, $username]);
+
+            header("Location: settings.php?success_password=Aktualizováno!");
+            exit();
+        } else {
+            $password_error_message = "Nové heslo nesplňuje požadavky na složitost.";
+        }
+    } else {
+        $password_error_message = "Aktuální heslo je nesprávné.";
+    }
+}
+
 }
 ?>
 
@@ -110,8 +140,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <span class="logo">InvoiceNow</span>
         <nav>
             <ul class="nav_links">
-                <li><a href="../php/homepage.php">Faktury</a></li>
-                <li><a href="../php/settings.php">Nastavení</a></li>
+                <li><strong><a href="../php/homepage.php">Faktury</a></strong></li>
+                <li><strong><a href="../php/settings.php">Nastavení</a></strong></li>
             </ul>
         </nav>
         
@@ -123,8 +153,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <div class="container">
         <div class="form-box">
-            <h1>Nastavení uživatelského účtu</h1>
-
+            <h1>Uživatel</h1>
             <?php if (isset($_GET['success_user'])): ?>
                 <p style="color: green;"><?php echo htmlspecialchars($_GET['success_user']); ?></p>
             <?php endif; ?>
@@ -150,30 +179,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <label for="email">E-mail</label>
                     <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($user['email']); ?>" required>
                 </div>
-                <h3>Změna hesla</h3>
                 <div class="input-group">
-                    <label for="current_password">Aktuální heslo / potvrzení</label>
+                    <label for="current_password">Heslo pro potvrzení</label>
                     <input type="password" id="current_password" name="current_password" required>
                 </div>
-                <div class="input-group">
-                    <label for="new_password">Nové heslo</label>
-                    <input type="password" id="new_password" name="new_password">
-                </div>
-                <small>
-                        <ul>
-                            <li>Jedno velké písmeno</li>
-                            <li>Jedno malé písmeno</li>
-                            <li>Jednu číslici</li>
-                            <li>Minimální délku 8 znaků</li>
-                        </ul>
-                    </small>
-                <button type="submit" class="btn">Uložit změny</button>
+                <button type="submit">Uložit změny</button>
             </form>
         </div>
 
         <div class="form-box">
-            <h1>Údaje o společnosti</h1>
-
+            <h1>Společnost</h1>
             <?php if (isset($_GET['success_company'])): ?>
                 <p style="color: green;"><?php echo htmlspecialchars($_GET['success_company']); ?></p>
             <?php endif; ?>
@@ -181,9 +196,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <?php if (isset($company_error_message)): ?>
                 <p style="color: red;"><?php echo htmlspecialchars($company_error_message); ?></p>
             <?php endif; ?>
-            
             <form action="settings.php" method="post">
-                <input type="hidden" name="form_type" value="company_info">
+            <input type="hidden" name="form_type" value="company_info">
                 <div class="input-group">
                     <label for="company_name">Název společnosti</label>
                     <input type="text" id="company_name" name="company_name" value="<?php echo htmlspecialchars($company['company_name'] ?? ''); ?>" required>
@@ -204,7 +218,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <label for="company_update_password">Heslo pro potvrzení</label>
                     <input type="password" id="company_update_password" name="company_update_password" required>
                 </div>
-                <button type="submit" class="btn">Uložit změny</button>
+                <button type="submit">Uložit změny</button>
+            </form>
+        </div>
+
+        <div class="form-box">
+            <h1>Změna hesla</h1>
+            <?php if (isset($_GET['success_password'])): ?>
+                <p style="color: green;"><?php echo htmlspecialchars($_GET['success_password']); ?></p>
+            <?php endif; ?>
+            
+            <?php if (isset($password_error_message)): ?>
+                <p style="color: red;"><?php echo htmlspecialchars($password_error_message); ?></p>
+            <?php endif; ?>
+            
+            <form action="settings.php" method="post">
+                <input type="hidden" name="form_type" value="change_password">
+                <div class="input-group">
+                    <label for="current_password">Aktuální heslo</label>
+                    <input type="password" id="current_password" name="current_password" required>
+                </div>
+                <div class="input-group">
+                    <label for="new_password">Nové heslo</label>
+                    <input type="password" id="new_password" name="new_password" required>
+                </div>
+                <small>
+                    <ul>
+                        <li>Minimálně 8 znaků</li>
+                        <li>Alespoň jedno velké písmeno</li>
+                        <li>Alespoň jedno malé písmeno</li>
+                        <li>Alespoň jedna číslice</li>
+                    </ul>
+                </small>
+                <button type="submit" class="btn">Změnit heslo</button>
             </form>
         </div>
     </div>

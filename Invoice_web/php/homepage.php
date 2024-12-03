@@ -37,8 +37,8 @@ $username = $_SESSION['username']; // Získání jména přihlášeného uživat
         <span class="logo">InvoiceNow</span>
         <nav>
             <ul class="nav_links">
-                <li><a href="../php/homepage.php">Faktury</a></li>
-                <li><a href="../php/settings.php">Nastavení</a></li>
+            <li><strong><a href="../php/homepage.php">Faktury</a></strong></li>
+            <li><strong><a href="../php/settings.php">Nastavení</a></strong></li>
             </ul>
         </nav>
         

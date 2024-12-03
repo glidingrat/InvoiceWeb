@@ -7,8 +7,6 @@
     <link rel="stylesheet" href="css/login.css">
     <link rel="stylesheet" href="css/response.css"> 
     <script src="js/login.js" defer></script>
-
-
 </head>
 <body id="login">
     <header>
@@ -18,6 +16,10 @@
     <main id="login">
         <div class="form-box">
             <h1>Přihlášení</h1>
+
+            <!-- Zobrazení chybové zprávy pomocí JavaScriptu -->
+            <p id="error-message" style="color: red; text-align: center; display: none;"></p>
+
             <form action="php/login.php" method="post">
                 <div class="input-group">
                     <label for="username">Uživatelské jméno</label>
@@ -32,5 +34,16 @@
             <p>Nemáte účet? <a href="register.html" class="register">Zaregistrujte se</a></p>
         </div>
     </main>
+
+    <script>
+        // Pokud existuje parametr 'error' v URL, zobrazí chybovou zprávu
+        const urlParams = new URLSearchParams(window.location.search);
+        const error = urlParams.get('error');
+        
+        if (error) {
+            document.getElementById('error-message').textContent = error;
+            document.getElementById('error-message').style.display = 'block';
+        }
+    </script>
 </body>
 </html>

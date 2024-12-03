@@ -25,16 +25,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 exit;
             } else {
                 // Nesprávné heslo
-                echo "<script>alert('Nesprávné heslo.');</script>";
+                header("Location: ../login.html?error=Nesprávné heslo.");
+                exit;
             }
         } else {
             // Uživatel neexistuje
-            echo "<script>alert('Uživatel neexistuje.');</script>";
+            header("Location: ../login.html?error=Uživatel neexistuje.");
+            exit;
         }
 
         $stmt->close();
     } else {
-        echo "<script>alert('Došlo k chybě při přípravě dotazu.');</script>";
+        header("Location: ../login.html?error=Došlo k chybě při přípravě dotazu.");
+        exit;
     }
 }
 

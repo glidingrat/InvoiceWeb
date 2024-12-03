@@ -1,10 +1,43 @@
 /* Globální nastavení */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+
+
+
 body, html {
     margin: 0;
     padding: 0;
-    font-family: 'Arial', sans-serif;
-    background-color: #f0f2f5;
+    font-family: 'Montserrat', sans-serif;
+    background-image: url('../img/About_Background.png'); 
+    background-size: cover; 
+    background-position: center; 
+   
     height: 100%;
+}
+
+
+
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: none;
+    border-radius: 8px;
+    background-color: #fff;
+    color: #333;
+    font-size: 1em;
+    text-shadow: none;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+    outline: none;
+    border: 2px solid #F5F5DC;
+    text-shadow: none;
 }
 
 .logo {
@@ -28,8 +61,6 @@ body, html {
 }
 
 .form-box {
-    background-color: #ffffff;
-    padding: 40px;
     border-radius: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     max-width: 400px;
@@ -37,10 +68,18 @@ body, html {
     text-align: center;
 }
 
-h1 {
-    margin-bottom: 30px;
+h1,h3 {
+    margin-bottom: 10px;
     font-size: 24px;
-    color: #333;
+    
+
+    font-family: 'Montserrat', sans-serif;
+    color: #edf0f1;
+    text-shadow: 
+    -1px -1px 0 black,  
+    1px -1px 0 black,
+    -1px 1px 0 black,
+    1px 1px 0 black;
 }
 
 .input-group {
@@ -48,10 +87,14 @@ h1 {
     text-align: left;
 }
 
+
+
 .input-group label {
     display: block;
     margin-bottom: 5px;
-    color: #555;
+    font-family: 'Montserrat', sans-serif;
+    color: #edf0f1;
+    font-size: 16px;
 }
 
 .input-group input {
@@ -64,45 +107,47 @@ h1 {
 }
 
 .input-group input:focus {
-    border-color: #4a90e2;
+    border: 2px solid #F5F5DC;
+    text-shadow: none;
     outline: none;
 }
 
-.btn {
-    display: block;
-    width: 100%;
-    padding: 12px;
-    background-color: #4a90e2;
+button[type="submit"] {
+    background-color: #F5F5DC;
     border: none;
-    border-radius: 5px;
-    color: #ffffff;
-    font-size: 16px;
+    color: rgb(0, 0, 0);
+    font-weight: 700;
+    font-size: 1.1em;
+    text-shadow: none;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    border-radius: 25px;
+    opacity: 0.7;
 }
 
-.btn:hover {
-    background-color: #357ABD;
+button[type="submit"]:hover {
+    opacity: 1;
 }
 
-p {
-    margin-top: 20px;
-    font-size: 14px;
-    color: #777;
-}
+
 
 ul{
     margin: 0 0 20px 20px; 
     padding: 0; 
     list-style-type: disc;
     text-align: left;
-    color: #777;
+    font-family: 'Montserrat', sans-serif;
+    color: #edf0f1;
 }
 
-p a {
-    color: #4a90e2;
-    text-decoration: none;
+.nav_links{
+    text-shadow: none;
 }
+
 
 p a:hover {
     text-decoration: underline;
@@ -119,7 +164,7 @@ header {
     justify-content: space-between; /* Prostor mezi prvky */
     align-items: center; /* Vertikální zarovnání */
     padding: 10px 20px; /* Vnitřní okraje */
-    background-color: #f4f4f4; /* Barva pozadí hlavičky */
+    background-color: rgb(205, 205, 186); /* Barva pozadí hlavičky */
     position: sticky; /* Zajistí, že zůstane nahoře při scrollování */
     top: 0; /* Zajistí, že je na vrchu */
     z-index: 1000; /* Zajišťuje, že je nad ostatními prvky */
@@ -141,8 +186,10 @@ header {
 
 .nav_links a {
     text-decoration: none; /* Odstranění podtržení */
-    color: #333; /* Barva textu */
+    font-family: 'Montserrat', sans-serif;
+    color:rgb(0, 0, 0);
 }
+
 
 /* Styl pro uživatelské info */
 .user-info {
@@ -185,9 +232,9 @@ header {
 
 .form-box {
     flex: 1;
-    margin: 20px; /* Spacing between the containers */
+    margin: 20px;
     padding: 20px;
-    border: 1px solid #ccc; /* Optional styling */
-    border-radius: 5px; /* Optional styling */
-    background-color: #f9f9f9; /* Optional styling */
+    background-color: rgba(104, 104, 104, 0.8);
+    border-radius: 25px;
+    text-align: center;
 }
